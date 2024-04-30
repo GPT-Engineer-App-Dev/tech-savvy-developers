@@ -1,10 +1,10 @@
-import { Box, Text, Input, Button, VStack, HStack } from '@chakra-ui/react';
+import { Box, Text, Input, Button, VStack, HStack, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 
 const developers = [
-  { id: 1, name: 'Alice Johnson', location: 'New York, USA', technologies: 'React, Node.js' },
-  { id: 2, name: 'Bob Smith', location: 'Berlin, Germany', technologies: 'Vue, PHP' },
-  { id: 3, name: 'Carlos Ruiz', location: 'Madrid, Spain', technologies: 'Angular, Java' }
+  { id: 1, name: 'Alice Johnson', location: 'New York, USA', technologies: 'React, Node.js', image: '/images/placeholder.png' },
+  { id: 2, name: 'Bob Smith', location: 'Berlin, Germany', technologies: 'Vue, PHP', image: '/images/placeholder.png' },
+  { id: 3, name: 'Carlos Ruiz', location: 'Madrid, Spain', technologies: 'Angular, Java', image: '/images/placeholder.png' }
 ];
 
 const Developers = () => {
@@ -32,6 +32,7 @@ const Developers = () => {
         <Input placeholder="Search developers by name, location, or technology" value={searchTerm} onChange={handleSearch} />
         {filteredDevelopers.map(dev => (
           <HStack key={dev.id} justify="space-between" p={4} borderWidth="1px" borderRadius="lg">
+            <Image src={dev.image} alt={dev.name} boxSize="100px" borderRadius="full" />
             <VStack align="start">
               <Text fontWeight="bold">{dev.name}</Text>
               <Text>{dev.location}</Text>
