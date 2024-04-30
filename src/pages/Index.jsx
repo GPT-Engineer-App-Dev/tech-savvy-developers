@@ -1,15 +1,49 @@
-// Complete the Index page component here
-// Use chakra-ui
-import { Button } from "@chakra-ui/react"; // example
-import { FaPlus } from "react-icons/fa"; // example - use react-icons/fa for icons
+import { Box, Text, Input, Button, VStack, HStack, useDisclosure } from '@chakra-ui/react';
+import { useState } from 'react';
+
+const developers = [
+  { id: 1, name: 'Alice Johnson', location: 'New York, USA', technologies: 'React, Node.js' },
+  { id: 2, name: 'Bob Smith', location: 'Berlin, Germany', technologies: 'Vue, PHP' },
+  { id: 3, name: 'Carlos Ruiz', location: 'Madrid, Spain', technologies: 'Angular, Java' }
+];
 
 const Index = () => {
-  // TODO: Create the website here!
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredDevelopers, setFilteredDevelopers] = useState(developers);
+
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+    if (!term) {
+      setFilteredDevelopers(developers);
+    } else {
+      setFilteredDevelopers(developers.filter(dev => 
+        dev.name.toLowerCase().includes(term.toLowerCase()) ||
+        dev.location.toLowerCase().includes(term.toLowerCase()) ||
+        dev.technologies.toLowerCase().includes(term.toLowerCase())
+      ));
+    }
+  };
+
   return (
-    <Button>
-      Hello world! <FaPlus />
-    </Button>
-  ); // example
+    <Box p={5}>
+      <VStack spacing={4} align="stretch">
+        <Text fontSize="2xl" fontWeight="bold">Welcome to Particles</Text>
+        <Text>The premier marketplace for software talent specialized in web technologies.</Text>
+        <Input placeholder="Search developers by name, location, or technology" value={searchTerm} onChange={handleSearch} />
+        {filteredDevelopers.map(dev => (
+          <HStack key={dev.id} justify="space-between" p={4} borderWidth="1px" borderRadius="lg">
+            <VStack align="start">
+              <Text fontWeight="bold">{dev.name}</Text>
+              <Text>{dev.location}</Text>
+              <Text>{dev.technologies}</Text>
+            </VStack>
+            <Button colorScheme="blue">Message</Button>
+          </HStack>
+        ))}
+      </VStack>
+    </Box>
+  );
 };
 
 export default Index;
